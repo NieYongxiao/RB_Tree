@@ -358,7 +358,7 @@ bool RB_Tree<K, V>::erase(const K& key)
 				//寻找待删除节点右子树当中key值最小的节点作为实际删除结点
 				Node* min_parent = cur;
 				Node* min_right = cur->_right;
-				while (min_right->_left)
+				while (min_right && min_right->_left)
 				{
 					min_parent = min_right;
 					min_right = min_right->_left;
@@ -498,7 +498,7 @@ bool RB_Tree<K, V>::erase(const K& key)
 	{
 		if (del == del_parent->_left)
 		{
-			del_parent->_right = del->_right;
+			del_parent->_left = del->_right;
 			if (del->_right)
 				del->_right->_parent = del_parent;
 		}
@@ -509,7 +509,7 @@ bool RB_Tree<K, V>::erase(const K& key)
 				del->_right->_parent = del_parent;
 		}
 	}
-	else
+	else if (del->_right == nullptr)
 	{
 		if (del == del_parent->_left)
 		{
